@@ -53,6 +53,7 @@ button {
     transition: all 0.2s ease;
     cursor: pointer;
 }
+
 input:focus {
     outline: none;
 }
@@ -103,6 +104,7 @@ input:focus {
 }
 
 @keyframes pulse-soft {
+
     0%,
     100% {
         opacity: 1;

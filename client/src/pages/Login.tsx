@@ -72,7 +72,7 @@ const Login = () => {
                             </div>
                         </label>
                         <button type="submit" disabled={loading} className='flex-center w-full py-3 bg-app-green text-white font-semibold rounded-xl hover:bg-app-green-light transition-colors disabled:opacity-50'>
-                            {loading ? <Loader2Icon className='animate-spin' /> : isLoginState ? 'Login' : 'Register'}
+                            {loading ? <Loader2Icon className='animate-spin' /> : isLoginState ? 'Login' : 'Sign Up'}
                         </button>
                     </form>
                 </div>
