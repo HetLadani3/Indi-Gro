@@ -28,18 +28,24 @@ const COMMENTS = [
 function seededRandom(seed: string) {
     let h = 0;
     for (let i = 0; i < seed.length; i++) h = (Math.imul(31, h) + seed.charCodeAt(i)) | 0;
-    return () => { h = (h ^ (h >>> 16)) * 0x45d9f3b; h = (h ^ (h >>> 16)) * 0x45d9f3b; h ^= h >>> 16; return (h >>> 0) / 0xffffffff; };
+    return () => {
+        h = (h ^ (h >>> 16)) * 0x45d9f3b;
+        h = (h ^ (h >>> 16)) * 0x45d9f3b;
+        h ^= h >>> 16;
+        return (h >>> 0) / 0xffffffff;
+    };
 }
 
 export default function DummyReviewsSection({ product }: { product: Product }) {
     const reviews = useMemo(() => {
-        const rng = seededRandom(product._id);
+        const rng = seededRandom(product.id);
         const count = Math.min(product.reviewCount, 6);
         const daysAgo = [3, 7, 14, 21, 35, 48];
         return Array.from({ length: count }, (_, i) => {
             const r = REVIEWERS[(Math.floor(rng() * REVIEWERS.length) + i) % REVIEWERS.length];
             const rating = Math.max(3, Math.min(5, Math.round(product.rating + (rng() - 0.5) * 2)));
-            const d = new Date(); d.setDate(d.getDate() - daysAgo[i % daysAgo.length]);
+            const d = new Date();
+            d.setDate(d.getDate() - daysAgo[i % daysAgo.length]);
             return {
                 id: i,
                 ...r,
@@ -96,9 +102,7 @@ export default function DummyReviewsSection({ product }: { product: Product }) {
                 <div className="space-y-6">
                     {reviews.map((review) => (
                         <div key={review.id} className="flex gap-4">
-                            <div className="size-10 rounded-full bg-app-green/10 text-app-green flex-center shrink-0 text-sm font-semibold">
-                                {review.avatar}
-                            </div>
+                            <div className="size-10 rounded-full bg-app-green/10 text-app-green flex-center shrink-0 text-sm font-semibold">{review.avatar}</div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center flex-wrap gap-2 mb-1">
                                     <span className="text-sm font-semibold text-app-text">{review.name}</span>
